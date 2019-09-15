@@ -35,12 +35,23 @@ class Game:
         self.p1.learn(move1, move2)
         self.p2.learn(move2, move1)
 
-    def play_game(self):
-        print("Game start!")
-        for round in range(3):
-            print(f"Round {round}:")
-            self.play_round()
-        print("Game over!")
+def play_game(self):
+    print("Game start!")
+
+    player_name = False
+    if not player_name:
+       player_name = input('Please enter player\'s name: ')
+
+
+        # print("Game over!")
+        print('Here are the rules:')
+        print('To stop playing enter z')
+        control = input('Who would you like to play with?')
+        throw = input('What would you like to throw?')
+        while throw.lower() != 'z':
+
+            print ('inside the game!')
+            
 
 
 if __name__ == '__main__':
