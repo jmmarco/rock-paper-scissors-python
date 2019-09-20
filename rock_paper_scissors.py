@@ -1,26 +1,34 @@
-import time
-import random
+#!/usr/bin/env python3
 
+import random
 """This program plays a game of Rock, Paper, Scissors between two Players,
 and reports both Player's scores each round."""
 
 moves = ['rock', 'paper', 'scissors']
 
+modes = ['random', 'reflect', 'repeat','cycle']
+
 """The Player class is the parent class for all of the Players
 in this game"""
 
-def print_pause(text, delay=0.1):
-    print(text)
-    time.sleep(delay)
-
 
 class Player:
-    def move(self, move = random.choice(moves)):
-        return move
+    def move(self):
+        return 'rock'
 
     def learn(self, my_move, their_move):
-
         pass
+
+class Random_Player(Player):
+    def move(self):
+        return random.choice(moves)
+
+class Reflect_Player(Player):
+    def move(self):
+        # print(f'The player mode is  {Player.move(self)} and the type: {type (Player.move(self))}')
+        return Player.move(self)
+
+class
 
 
 def beats(one, two):
@@ -29,13 +37,46 @@ def beats(one, two):
             (one == 'paper' and two == 'rock'))
 
 
+def intro():
+    print("Here are the rules of the game: scissor cuts paper,paper "
+          "covers rock, and rock crushes scissors.")
+    print("Play either 'rock', 'paper', or 'scissors'")
+    print("If you want to stop playing, enter a 'q'.")
+    selected_mode = None
+    while True:
+        choice = input("Who would you like to play with? Please enter "
+                       "'random', 'reflect', 'repeat', or 'cycle':")
+        if choice in modes:
+            selected_mode = select_mode(choice)
+            break
+        elif choice == 'q':
+            print('Ok, bye!')
+            exit()
+        else:
+            print('Sorry, not a valid choice. Try ')
+    return selected_mode
+
+
+def select_mode(mode):
+    print('begin select_mode')
+    if mode == 'random':
+        return Random_Player
+    elif mode == 'reflect':
+        return Reflect_Player
+    else:
+        print('Sorry that mode is not implemented yet')
+        exit()
+
+
+
 class Game:
+    print('inside GAAME CLASS')
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
 
-    def play_round(self, player_move):
-        move1 = self.p1.move(player_move)
+    def play_round(self):
+        move1 = self.p1.move()
         move2 = self.p2.move()
         print(f"Player 1: {move1}  Player 2: {move2}")
         self.p1.learn(move1, move2)
@@ -43,24 +84,13 @@ class Game:
 
     def play_game(self):
         print("Game start!")
-
-        player_name = False
-        if not player_name:
-            player_name = input('Please enter player\'s name: ')
-
-
-            # print("Game over!")
-            print_pause('Here are the rules:')
-            print_pause('To stop playing enter: \'q\'')
-            control = input('Who would you like to play with?')
-            throw = input('What would you like to throw?')
-            while throw.lower() != 'q':
-                print('pakafods')
-                game.play_round(throw)
-                break
-
+        for round in range(3):
+            print(f"Round {round}:")
+            self.play_round()
+        print("Game over!")
 
 
 if __name__ == '__main__':
-    game = Game(Player(), Player())
+    opponent = intro()
+    game = Game(Player(), opponent())
     game.play_game()
